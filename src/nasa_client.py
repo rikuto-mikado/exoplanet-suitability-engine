@@ -57,7 +57,14 @@ print("Fetching exoplanet data from NASA Exoplanet Archive...")
 response = requests.get(url, params=params)
 response.raise_for_status()
 
-with open("planets.csv", "w", encoding="utf-8") as f:
+from pathlib import Path
+
+# Resolve data output directory (data/)
+output_dir = Path(__file__).resolve().parent.parent / "data"
+output_dir.mkdir(parents=True, exist_ok=True)
+output_file = output_dir / "planets.csv"
+
+with open(output_file, "w", encoding="utf-8") as f:
     f.write(response.text)
 
-print("Saved data to planets.csv successfully!")
+print(f"Saved data to {output_file} successfully!")

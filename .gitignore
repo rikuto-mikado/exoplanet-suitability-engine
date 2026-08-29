@@ -68,10 +68,10 @@ coverage.xml
 ehthumbs.db
 Thumbs.db
 
-# Data & Model weights (uncomment if storing large datasets locally)
-# data/raw/*
-# !data/raw/.gitkeep
-# *.csv
-# *.fits
-# *.h5
-# *.parquet
+# Data directory and datasets
+data/
+*.csv
+*.fits
+*.h5
+*.parquet
+planets.csv
