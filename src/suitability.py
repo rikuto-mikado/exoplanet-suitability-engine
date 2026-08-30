@@ -105,3 +105,33 @@ def calculate_biosig_suitability(csv_path=DEFAULT_DATA_PATH):
         elif 0.1 <= eccen <= 0.25:
             return 60
         return 0
+
+    # Star Safety Score(score_star)
+    def score_star(row):
+        teff = row["st_teff"]
+        age = row["st_age"]
+        score = 0
+
+        if pd.notna(teff):
+            if 3900 <= teff <= 5200:
+                score += 60
+            elif 5200 <= teff <= 6000:
+                score += 50
+            elif teff < 3900:
+                score += 30
+            else:
+                score += 0
+        else:
+            score += 30
+
+        if pd.notna(age):
+            if 3.0 <= age <= 8.0:
+                score += 40
+            elif age < 1.0:
+                score += 10
+            else:
+                score += 20
+        else:
+            score += 20
+
+        return min(score, 100)
