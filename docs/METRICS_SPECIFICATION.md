@@ -90,29 +90,23 @@ Here is what our raw data columns mean:
 ### Metric 5: Observability Score (`score_obs`)
 
 - **What it checks**: Can telescopes like JWST easily take clear pictures or analyze the planet's atmosphere?
-- **Parameters used**: `sy_dist` (Distance), `pl_rade` (Planet Size), `st_rad` (Star Size)
+- **Parameters used**: `sy_dist` (Distance from Earth in parsecs)
 - **Logic**:
-  - **Distance**:
-    - Closer than 20 pc (~65 light-years) $\rightarrow$ **100 points**
-    - 20 to 50 pc $\rightarrow$ **70 points**
-    - Over 100 pc $\rightarrow$ **20 points**
-  - **Transit Signal**: If the planet is relatively large compared to its host star (`pl_rade / st_rad`), atmospheric detection is much easier.
+  - Closer than 20 pc (~65 light-years) $\rightarrow$ **100 points**
+  - 20 to 50 pc $\rightarrow$ **70 points**
+  - Over 50 pc (or unknown) $\rightarrow$ **20 points**
 
 ---
 
 ## 4. Overall Total Score Formula
 
-We group the metrics into three simple categories:
+We compute the final score using a weighted sum of Habitability, Star Safety, and Observability:
 
-$$\text{Habitability Score} = (\text{Temperature Score} \times 0.5) + (\text{Rocky Score} \times 0.3) + (\text{Orbit Score} \times 0.2)$$
+1. **Habitability Score (50%)**:
+   $$\text{Habitability Score} = (\text{score\_temp} \times 0.5) + (\text{score\_rocky} \times 0.3) + (\text{score\_orbit} \times 0.2)$$
 
-$$\text{Star Score} = \text{Star Safety Score}$$
-
-$$\text{Observability Score} = \text{Distance \& Visibility Score}$$
-
-### Final Total:
-
-$$\text{Total Score} = (\text{Habitability Score} \times 0.50) + (\text{Star Score} \times 0.25) + (\text{Observability Score} \times 0.25)$$
+2. **Total Score**:
+   $$\text{Total Score} = (\text{Habitability Score} \times 0.50) + (\text{score\_star} \times 0.25) + (\text{score\_obs} \times 0.25)$$
 
 ---
 
