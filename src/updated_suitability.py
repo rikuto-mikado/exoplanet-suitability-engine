@@ -22,17 +22,22 @@ def updated_calculate_biosig_suitability(csv_path=DEFAULT_DATA_PATH):
     df["rade_imputed"] = df["pl_rade"].fillna(1.0)
 
     # Definition of density function
-    df["dens_imputed"]
+    calculated_density = df["mass_imputed"] / (df["rade_imputed"] ** 3)
+    df["dens_imputed"] = df["pl_dens"].fillna(calculated_density).fillna(5.51)
 
     # Definition of escape velocity \(v_{\text{esc}}\) (relative to Earth)
-    df["v_esc_rel"]
+    df["v_esc_rel"] = np.sqrt(df["mass_imputed"] / df["rade_imputed"]).fillna(1.0)
 
     # Definition of physical complementation for insolation (pl_insol) and equilibrium temperature (pl_eqt)
-    s_form_orbit =
+    s_form_orbit = df["st_lum"] / (df["pl_orbsmax"] ** 2)
+    df["insol_imputed"] = df["pl_insol"].fillna(s_form_orbit).fillna(1.0)
+
+    calculated_eqt = 255.0 * (df["insol_imputed"] ** 0.25)
+    df["eqt_imputed"] = df["pl_eqt"].fillna(calculated_eqt).fillna(255.0)
 
     # ESI (Earth Similarity Index) calculation
     def single_esi(row):
-        return 
+        return
 
     print("--- Top 10 Habitable Planets ---")
     print(df_scored[display_cols].head(10))
